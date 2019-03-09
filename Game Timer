@@ -1,0 +1,47 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+/*
+
+   This is a timer that consistently counts throughought the game
+                                                                    */
+
+
+
+public class timer1 : MonoBehaviour
+{
+    public Text timerText; //Our text that is displayed towards the user
+    
+    private float startTime;
+    bool keepTime = true;
+    
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        startTime = Time.time; //Starts the timer at 0
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (keepTime) //While the gae is still going, the timer will update text to read the seconds and minutes 
+        {
+            float t = Time.time - startTime;
+            string minutes = ((int)t / 60).ToString(); 
+            string seconds = (t % 60).ToString("f2");
+            timerText.text = minutes + ":" + seconds;
+        }
+        
+    }
+
+    public void StopTimer() //Stops the time
+    {
+        if(keepTime)
+        {
+            keepTime = false;
+        }
+    }
+}
