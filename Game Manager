@@ -1,0 +1,32 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class GameManager : MonoBehaviour
+{
+
+    bool gameOver = false;
+    public GameObject gameOverPanel;
+    public GameObject gameOverText;
+    public timer1 timer;
+
+    public void GameOver() //Called when the player hits a game object
+    {
+        if(!gameOver)
+        {
+            gameOver = true;
+            gameOverPanel.active = true;
+            gameOverText.active = true;
+            timer.StopTimer();
+            Invoke("restart", 2.0f);
+        }
+        
+    }
+  
+    //Returns player to Main Menu
+    void restart() 
+    {
+        SceneManager.LoadScene(0); 
+    }
+}
