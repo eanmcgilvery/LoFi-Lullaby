@@ -1,0 +1,39 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BushPool : MonoBehaviour
+{
+    static int numBushs = 750; //Number of bushes we wish to be spawned upon start
+    
+    //Using prebuilt bush assets from Unity
+    
+    public GameObject bushPrefab;
+    static GameObject[] bushes;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
+        bushes = new GameObject[numBushs];
+        for (int i = 0; i < numBushs; i++)
+        {
+            bushes[i] = (GameObject)Instantiate(bushPrefab, Vector3.zero, Quaternion.identity); //Spawns in bushes on the terrain
+            bushes[i].SetActive(false);
+        }
+
+
+    }
+
+    static public GameObject getBush()
+    {
+        for (int i = 0; i < numBushs; i++)
+        {
+            if (!bushes[i].activeSelf)
+            {
+                return bushes[i];
+            }
+        }
+        return null;
+    }
+}
