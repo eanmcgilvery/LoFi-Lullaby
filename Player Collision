@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+//Called when the player hits an object. The game is rendered Game Over, and player is returned to the main menu
+
+public class PlayerCollision : MonoBehaviour
+{
+    public BallMovement movement;
+    
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.tag == ("Obstacles"))
+        {
+            movement.enabled = false;
+            FindObjectOfType<GameManager>().GameOver();
+        }
+    }
+}
