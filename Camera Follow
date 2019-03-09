@@ -1,0 +1,21 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class FollowPlayer : MonoBehaviour
+{
+    public Transform player;
+    public Rigidbody playerObject;
+    public Vector3 offset;
+    public Vector3 rotateValue;
+    public float yPos;
+
+//Updates the camera to follow our player object throughout the space
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        transform.position = player.position + offset;
+
+    }
+}
