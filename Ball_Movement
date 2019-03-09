@@ -1,0 +1,43 @@
+using UnityEngine;
+
+public class BallMovement : MonoBehaviour
+{
+    public Rigidbody rb; //rb Is our "Ball" or player character
+    
+    public float forward = 100f;
+    public float push = 100f;
+    public float sideways = 50f;
+    public float maxVel = 15.0f; // Velocity Cap for the game
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+    
+    //Time.deltaTime is used to keep moving at a constant speed in the game
+    //Can use the arrow keys or WASD to move
+    
+        rb.AddForce(0, 0, forward * Time.deltaTime);
+
+        if (Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow))
+        {
+            rb.AddForce(sideways * Time.deltaTime, 0, 0, ForceMode.Acceleration);
+        }
+
+        if (Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow))
+        {
+            rb.AddForce(-sideways * Time.deltaTime, 0, 0, ForceMode.Acceleration);
+        }
+
+        if (Input.GetKey("w") || Input.GetKey(KeyCode.UpArrow))
+        {
+            rb.AddForce(0, 0, push * Time.deltaTime, ForceMode.Acceleration);
+        }
+
+        if (Input.GetKey("s") || Input.GetKey(KeyCode.DownArrow))
+        {
+            rb.AddForce(0, 0, -push * Time.deltaTime, ForceMode.Acceleration);
+        }
+      
+    }
+
+}
