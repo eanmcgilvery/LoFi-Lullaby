@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+/*
+  This file is used to keep track of the players distance along the X-axis
+                                                                            */
+
+
+public class DistanceCOunter : MonoBehaviour
+{
+    public GameObject current;
+    public GameObject destination;
+    private float beginPos;
+    private float targetPos;
+    private float currPos;
+    private float displacement;
+    public Text dist;
+
+    void Start()
+    {
+        beginPos = current.transform.position.x; //Assign a starting position
+        targetPos = destination.transform.position.x;
+    }
+
+    void Update()
+    {
+        float currDelta = current.transform.position.x - currPos;
+        currPos = current.transform.position.x; //Gets current distance traveled
+        displacement += Mathf.Abs(currDelta); //Find the displacement from start to current poisition  
+        
+        dist.text = displacement.ToString() + " meters"; //Print out the distance, in meters, to the screen
+    }
+}
+
