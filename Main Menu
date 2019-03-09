@@ -1,0 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+public class MainMenu : MonoBehaviour
+{
+
+    //Let's the user pick between Sunset, or Twilight theme of the game, or to quit the application
+    
+    
+   public void PlayTwilight()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2); //Goes to next Scene in the build Array
+    }
+    public void PlaySunset()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1); //Goes to next Scene in the build Array
+    }
+    public void ReturnToMain()
+    {
+        if (SceneManager.GetActiveScene().buildIndex == 1)   //If they were playing sunset
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        }
+        else if(SceneManager.GetActiveScene().buildIndex == 2)  //If they were playing twilight
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);
+
+        }
+        else
+        {
+            Debug.Log("Error");
+        }
+
+    }
+    public void QuitGame() //Quits application
+    {
+        Debug.Log("Quit is working."); //This statement was used in unity's console output to let me know if it was working
+        Application.Quit(); 
+    }
+
+}
