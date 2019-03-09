@@ -1,0 +1,97 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GenerateTerrain : MonoBehaviour
+{
+    public int heightScale = 5;
+    public float detailScale = 10.0f;
+    
+    //Create a List of the objects in our game
+    
+    List<GameObject> myTrees = new List<GameObject>();
+    List<GameObject> myBushes = new List<GameObject>();
+    List<GameObject> myRocks = new List<GameObject>();
+
+    void Start()
+    {
+        Mesh mesh = GetComponent<MeshFilter>().mesh;
+        Vector3[] verticies = mesh.vertices;
+        for (int v = 0; v < verticies.Length; v++)
+        {
+            verticies[v].y = Mathf.PerlinNoise((verticies[v].x + this.transform.position.x) / detailScale,
+                                               (verticies[v].z + this.transform.position.z) / detailScale) * heightScale;
+                                               
+            //Spawns Trees, Rocks, and bushes in random locations upon newly generated terrain
+            
+            if (verticies[v].y > 2.2 && Random.Range(0, 100) < 1)
+            {
+                GameObject newTree = TreePool.getTree();
+                if (newTree != null)
+                {
+                    Vector3 treePos = new Vector3(verticies[v].x + this.transform.position.x,
+                                                  verticies[v].y,
+                                                  verticies[v].z + this.transform.position.z);
+                    newTree.transform.position = treePos;
+                    newTree.SetActive(true);
+                    myTrees.Add(newTree);
+                }
+            }
+            else if (verticies[v].y < 2.2 && verticies[v].y > 1.6 && Random.Range(0, 100) < 5)
+            {
+                GameObject newBush = BushPool.getBush();
+                if (newBush != null)
+                {
+                    Vector3 bushPos = new Vector3(verticies[v].x + this.transform.position.x,
+                                                  verticies[v].y,
+                                                  verticies[v].z + this.transform.position.z);
+                    newBush.transform.position = bushPos;
+                    newBush.SetActive(true);
+                    myBushes.Add(newBush);
+                }
+            }
+            else if (verticies[v].y < 1.6 && verticies[v].y > 0.5 && Random.Range(0, 100) < 5)
+            {
+                GameObject newRock = RockPool.getRock();
+                if (newRock != null)
+                {
+                    Vector3 rockPos = new Vector3(verticies[v].x + this.transform.position.x,
+                                                  verticies[v].y,
+                                                  verticies[v].z + this.transform.position.z);
+                    newRock.transform.position = rockPos;
+                    newRock.SetActive(true);
+                    myRocks.Add(newRock);
+                }
+            }
+        }
+
+        mesh.vertices = verticies;
+        mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+        gameObject.AddComponent<MeshCollider>();
+    }
+
+    void OnDestroy() //Called when the plane is getting destoyed because the player has moved up and generated new Terrain
+    {
+        for (int i = 0; i < myTrees.Count; i++)
+        {
+            if (myTrees[i] != null)
+                myTrees[i].SetActive(false);
+        }
+        myTrees.Clear();
+
+        for (int i = 0; i < myBushes.Count; i++)
+        {
+            if (myBushes[i] != null)
+                myBushes[i].SetActive(false);
+        }
+        myBushes.Clear();
+
+        for (int i = 0; i < myRocks.Count; i++)
+        {
+            if (myRocks[i] != null)
+                myRocks[i].SetActive(false);
+        }
+        myRocks.Clear();
+    }
+}
