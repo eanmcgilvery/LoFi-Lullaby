@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Jump : MonoBehaviour
+{
+    public Rigidbody rb; //Our player object
+    
+    public float jump = 15000;
+    public bool canJump = true;
+
+    // Update is called once per frame
+    void Update()
+    {
+        //Let's user jump using spacebar, only once per time they hit the ground
+        Debug.Log(canJump);
+        if (Input.GetKey("space"))
+        {
+            if(canJump)
+            {
+                rb.AddForce(0, jump * Time.deltaTime, 0, ForceMode.Acceleration); //Add a force in the y-direction to make the birdy FLY!!!
+                canJump = false; //Limits the user from spamming the jump
+            } 
+        }
+    }
+
+    //When the user hits the ground again, the jump becomes avalibile to reuse
+    void OnCollisionEnter(Collision collision)
+    {
+        if(!canJump)
+        {
+            canJump = true; 
+        }
+        
+    }
+}
