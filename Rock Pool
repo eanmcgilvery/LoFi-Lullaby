@@ -1,0 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+
+//This file spawns our rock objects into the game
+
+
+public class RockPool : MonoBehaviour
+{
+    static int numRocks = 750;
+    public GameObject rockPrefab;
+    static GameObject[] rocks;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+
+        rocks = new GameObject[numRocks];
+        for (int i = 0; i < numRocks; i++)
+        {
+            rocks[i] = (GameObject)Instantiate(rockPrefab, Vector3.zero, Quaternion.identity);
+            rocks[i].SetActive(false);
+        }
+
+
+    }
+
+    static public GameObject getRock()
+    {
+        for (int i = 0; i < numRocks; i++)
+        {
+            if (!rocks[i].activeSelf)
+            {
+                return rocks[i];
+            }
+        }
+        return null;
+    }
+}
